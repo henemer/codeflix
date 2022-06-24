@@ -11,12 +11,17 @@ RUN apt update && apt install -y --no-install-recommends \
 # qual usuário teremos por padrão no container
 RUN useradd -ms /bin/bash python
 
+RUN pip install pdm
+
 USER python
 
 WORKDIR /home/python/app
 
+ENV MY_PYTHON_PACKAGES=/home/python/app/__pypackages__/3.10
 ENV PYTHONPATH=${PYTHONPATH}/home/python/app/src
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV PATH $PATH:${MY_PYTHON_PACKAGES}/bin
+
 
 #COPY .p10k.zsh /home/python/.
 
@@ -30,9 +35,12 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
     -a 'export TERM=xterm-256color'
 
 RUN echo '[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh' >> ~/.zshrc && \
-    echo 'HISTFILE=/home/python/zsh/.zsh_history' >> ~/.zshrc
+    echo 'HISTFILE=/home/python/zsh/.zsh_history' >> ~/.zshrc && \
+    echo 'export GPG_TTY=$(tty)' >> ~/.zshrc && \
+    echo 'eval "$(pdm --pep582)"' >> ~/.zshrc && \
+    echo 'eval "$(pdm --pep582)"' >> ~/.bashrc
 
-CMD [ "tail", "-f", "/dev/null" ]
+CMD [ "tail", "-f", "/dev/null"]
 
 
 

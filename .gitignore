@@ -1,2 +1,4 @@
 *.pyc
+__pypackages__
 .docker/zsh/history/.zsh_history
+.pytest_cache

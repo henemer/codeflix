@@ -1,0 +1,23 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Emerson Henning", email = "emerson@henning.com.br"},
+]
+dependencies = []
+requires-python = ">=3.10"
+license = {text = "MIT"}
+[project.optional-dependencies]
+
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+    "autopep8>=1.6.0",
+    "pylint>=2.14.3",
+    "pytest>=7.1.2",
+]
+
+[build-system]
+requires = ["pdm-pep517>=0.12.0"]
+build-backend = "pdm.pep517.api"
