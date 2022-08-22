@@ -175,11 +175,11 @@ class InMemorySearchableRepository(
     ABC
 ):
     def search(self, input_params: SearchParams[Filter]) -> SearchResult[ET, Filter]:
-        items_filtered = self._apply_filter(self, input_params.filter)
-        items_ordered = self._apply_sort(
+        items_filtered = self._apply_filter(self.items, input_params.filter)
+        items_sorted = self._apply_sort(
             items_filtered, input_params.sort, input_params.sort_dir)
         items_paginated = self._apply_paginate(
-            items_ordered, input_params.page, input_params.per_page)
+            items_sorted, input_params.page, input_params.per_page)
 
         return SearchResult(
             items=items_paginated,
@@ -204,4 +204,4 @@ class InMemorySearchableRepository(
     def _apply_paginate(self, items: List[ET], page: int, per_page: int) -> List[ET]:
         start = (page - 1) * per_page
         limit = start + per_page
-        return items[slice(start, limit)]
+        return items [slice(start, limit)]
