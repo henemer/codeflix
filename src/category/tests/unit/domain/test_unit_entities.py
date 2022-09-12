@@ -36,7 +36,7 @@ class TestCategoryUnit(unittest.TestCase):
 
     def test_if_created_at_is_generated_in_constructor(self):
         with patch.object(Category, 'validate'):
-            category1 = Category(name='Movie 1') #NOSONAR
+            category1 = Category(name='Movie 1')  # NOSONAR
             category2 = Category(name='Movie 2')
             self.assertNotEqual(category1.created_at.timestamp(),
                                 category2.created_at.timestamp())

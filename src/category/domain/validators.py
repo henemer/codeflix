@@ -4,19 +4,22 @@ from rest_framework import serializers
 from __seedwork.domain.validators import DRFValidator, StrictBooleanField, StrictCharField
 
 # pylint:disable=abstract-method
+
+
 class CategoryRules(serializers.Serializer):
     name = StrictCharField(max_length=255)
-    description = StrictCharField(required=False, allow_null=True, allow_blank=True)
-    is_active =  StrictBooleanField(required=False)
+    description = StrictCharField(
+        required=False, allow_null=True, allow_blank=True)
+    is_active = StrictBooleanField(required=False)
     created_at = serializers.DateTimeField(required=False)
 
 
 class CategoryValidator(DRFValidator):
-    def validate(self, data: Dict)->bool:
+    def validate(self, data: Dict) -> bool:
         rules = CategoryRules(data=data if data is not None else {})
         return super().validate(rules)
 
-        
+
 class CategoryValidatorFactory:
     @staticmethod
     def create():

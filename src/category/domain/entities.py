@@ -8,6 +8,7 @@ from __seedwork.domain.exceptions import EntityValidationException
 
 from category.domain.validators import CategoryValidatorFactory
 
+
 @dataclass(kw_only=True, frozen=True, slots=True)
 class Category(Entity):
 
@@ -15,16 +16,8 @@ class Category(Entity):
     description: Optional[str] = None
     is_active: Optional[bool] = True
     created_at: Optional[datetime] = field(
-        default_factory=lambda: datetime.now())
-
-    # def __new__(cls, **kwargs):
-    #     cls.validate(
-    #         name=kwargs.get('name'),
-    #         description=kwargs.get('description'),
-    #         is_active=kwargs.get('is_active'),
-    #         created_at=kwargs.get('created_at')
-    #     )
-    #     return super(Category, cls).__new__(cls)
+        default_factory=datetime.now
+    )
 
     def __post_init__(self):
         if not self.created_at:

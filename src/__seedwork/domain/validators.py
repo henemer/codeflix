@@ -13,6 +13,7 @@ from .exceptions import ValidationException
 if not settings.configured:
     settings.configure(USE_I18N=False)
 
+
 @dataclass(frozen=True, slots=True)
 class ValidatorRules:
     value: Any
@@ -71,6 +72,7 @@ class DRFValidator(ValidatorFieldsInterface[PropsValidated], ABC):
             }
             return False
 
+
 class StrictCharField(CharField):
     def to_internal_value(self, data):
         if not isinstance(data, str):
@@ -89,4 +91,3 @@ class StrictBooleanField(BooleanField):
             elif data is None and self.allow_null:
                 return None
         self.fail('invalid', input=data)
-    

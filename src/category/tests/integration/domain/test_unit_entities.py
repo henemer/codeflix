@@ -6,21 +6,21 @@ from __seedwork.domain.exceptions import EntityValidationException, ValidationEx
 
 class TestCategoryIntegration(unittest.TestCase):
     def test_create_with_invalid_cases_for_name_prop(self):
-        invalid_data = [ 
-            { 
-                'data': {'name':None},
+        invalid_data = [
+            {
+                'data': {'name': None},
                 'expected': 'This field may not be null.'
             },
-            { 
-                'data': {'name':''},
+            {
+                'data': {'name': ''},
                 'expected': 'This field may not be blank.'
             },
-            { 
-                'data': {'name':5},
+            {
+                'data': {'name': 5},
                 'expected': 'Not a valid string.'
             },
-            { 
-                'data': {'name':'a'*256},
+            {
+                'data': {'name': 'a'*256},
                 'expected': 'Ensure this field has no more than 255 characters.'
             },
 
@@ -35,7 +35,6 @@ class TestCategoryIntegration(unittest.TestCase):
                 [i['expected']],
                 f'Expected: {i["expected"]}, actual: {assert_error.exception.error["name"][0]}'
             )
-
 
     def test_create_with_invalid_cases_for_description_prop(self):
         with self.assertRaises(EntityValidationException) as assert_error:
@@ -63,21 +62,21 @@ class TestCategoryIntegration(unittest.TestCase):
             self.fail(f'Some prop is not valid. Error: {exception.error}')
 
     def test_update_with_invalid_cases_for_name_prop(self):
-        invalid_data = [ 
-            { 
-                'data': {'name':None, 'description': None},
+        invalid_data = [
+            {
+                'data': {'name': None, 'description': None},
                 'expected': 'This field may not be null.'
             },
-            { 
-                'data': {'name':'', 'description': None},
+            {
+                'data': {'name': '', 'description': None},
                 'expected': 'This field may not be blank.'
             },
-            { 
-                'data': {'name':5, 'description': None},
+            {
+                'data': {'name': 5, 'description': None},
                 'expected': 'Not a valid string.'
             },
-            { 
-                'data': {'name':'a'*256, 'description': None},
+            {
+                'data': {'name': 'a'*256, 'description': None},
                 'expected': 'Ensure this field has no more than 255 characters.'
             },
         ]
@@ -100,7 +99,7 @@ class TestCategoryIntegration(unittest.TestCase):
         with self.assertRaises(EntityValidationException) as assert_error:
             category.update('Movie', 5)  # NOSONAR
         self.assertEqual(
-            assert_error.exception.error['description'],['Not a valid string.'])
+            assert_error.exception.error['description'], ['Not a valid string.'])
 
     def test_update_with_valid_cases(self):
         category = Category(name='Movie', description='some description')
@@ -110,8 +109,6 @@ class TestCategoryIntegration(unittest.TestCase):
             category.update('New movie', '')
         except ValidationException as exception:
             self.fail(f'Some prop is not valid. Error: {exception.error}')
-
-
 
 
 # import unittest

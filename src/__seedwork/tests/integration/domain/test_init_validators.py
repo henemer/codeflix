@@ -28,35 +28,35 @@ class TestDRFValidatorIntegration(unittest.TestCase):
             'name': 'test',
             'price': 5})
 
+
 class TestStrictCharFieldUnit(unittest.TestCase):
     def test_if_is_invalid_when_not_str_value(self):
         class StubStrictCharFieldSerializer(serializers.Serializer):
             name = StrictCharField()
 
-        serializer = StubStrictCharFieldSerializer(data = {'name':5})
+        serializer = StubStrictCharFieldSerializer(data={'name': 5})
         serializer.is_valid()
         self.assertEqual(serializer.errors, {
             'name': [serializers.ErrorDetail(string='Not a valid string.', code='invalid')]
         })
 
-
-        serializer = StubStrictCharFieldSerializer(data = {'name':True})
+        serializer = StubStrictCharFieldSerializer(data={'name': True})
         serializer.is_valid()
         self.assertEqual(serializer.errors, {
             'name': [serializers.ErrorDetail(string='Not a valid string.', code='invalid')]
-        })        
+        })
 
     def test__is_valid(self):
         class StubStrictCharFieldSerializer(serializers.Serializer):
             name = StrictCharField(required=False, allow_null=True)
-        
-        serializer = StubStrictCharFieldSerializer(data = {'name':None})
+
+        serializer = StubStrictCharFieldSerializer(data={'name': None})
         self.assertTrue(serializer.is_valid())
 
         class StubStrictCharFieldSerializer(serializers.Serializer):
             name = StrictCharField()
-        
-        serializer = StubStrictCharFieldSerializer(data = {'name':'Some name'})
+
+        serializer = StubStrictCharFieldSerializer(data={'name': 'Some name'})
         self.assertTrue(serializer.is_valid())
 
 
@@ -67,42 +67,39 @@ class TestStrictBooleanFieldUnit(unittest.TestCase):
 
         message_error = 'Must be a valid boolean.'
 
-        serializer = StubStrictBooleanFieldSerializer(data = {'active':0})
+        serializer = StubStrictBooleanFieldSerializer(data={'active': 0})
         serializer.is_valid()
         self.assertEqual(serializer.errors, {
-            'active': [serializers.ErrorDetail(string= message_error, code='invalid')]
+            'active': [serializers.ErrorDetail(string=message_error, code='invalid')]
         })
 
-
-        serializer = StubStrictBooleanFieldSerializer(data = {'active':1})
+        serializer = StubStrictBooleanFieldSerializer(data={'active': 1})
         serializer.is_valid()
         self.assertEqual(serializer.errors, {
             'active': [serializers.ErrorDetail(string=message_error, code='invalid')]
-        })        
+        })
 
-        serializer = StubStrictBooleanFieldSerializer(data = {'active':'True'})
+        serializer = StubStrictBooleanFieldSerializer(data={'active': 'True'})
         serializer.is_valid()
         self.assertEqual(serializer.errors, {
             'active': [serializers.ErrorDetail(string=message_error, code='invalid')]
-        })        
+        })
 
-
-        serializer = StubStrictBooleanFieldSerializer(data = {'active':'False'})
+        serializer = StubStrictBooleanFieldSerializer(data={'active': 'False'})
         serializer.is_valid()
         self.assertEqual(serializer.errors, {
             'active': [serializers.ErrorDetail(string=message_error, code='invalid')]
-        })        
+        })
 
     def test_is_valid(self):
         class StubStrictBooleanFieldSerializer(serializers.Serializer):
             active = StrictBooleanField(allow_null=True)
-        
-        serializer = StubStrictBooleanFieldSerializer(data = {'active':None})
+
+        serializer = StubStrictBooleanFieldSerializer(data={'active': None})
         self.assertTrue(serializer.is_valid())
 
-        serializer = StubStrictBooleanFieldSerializer(data = {'active':True})
+        serializer = StubStrictBooleanFieldSerializer(data={'active': True})
         self.assertTrue(serializer.is_valid())
 
-        serializer = StubStrictBooleanFieldSerializer(data = {'active':False})
+        serializer = StubStrictBooleanFieldSerializer(data={'active': False})
         self.assertTrue(serializer.is_valid())
-

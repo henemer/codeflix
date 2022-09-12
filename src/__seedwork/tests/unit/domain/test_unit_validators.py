@@ -173,10 +173,9 @@ class TestValidatorFieldsInterfaceUnit(unittest.TestCase):
     def test_throw_error_when_validate_method_not_implemented(self):
         with self.assertRaises(TypeError) as assert_error:
             # pylint: disable=abstract-class-instantiated
-            ValidatorFieldsInterface() 
+            ValidatorFieldsInterface()
         self.assertEqual(
             assert_error.exception.args[0], "Can't instantiate abstract class ValidatorFieldsInterface with abstract method validate")
-
 
     def test_qualquer(self):
         fields_class = fields(ValidatorFieldsInterface)
@@ -189,23 +188,20 @@ class TestValidatorFieldsInterfaceUnit(unittest.TestCase):
         self.assertEqual(validated_data_fields.name, "validated_data")
         self.assertIsNone(validated_data_fields.default)
 
+
 class TestDRFValidatorUnit(unittest.TestCase):
     @patch.object(Serializer, 'is_valid', return_value=True)
     @patch.object(Serializer, 'validated_data', return_value={'field': 'value'}, new_callable=PropertyMock)
-    def test_if_validated_data_is_set(self, mock_validated_data:PropertyMock, mock_is_valid:MagicMock ):
+    def test_if_validated_data_is_set(self, mock_validated_data: PropertyMock, mock_is_valid: MagicMock):
         validator = DRFValidator()
         is_valid = validator.validate(Serializer)
-        self.assertEqual(validator.validated_data, {'field':'value'} )
+        self.assertEqual(validator.validated_data, {'field': 'value'})
         self.assertTrue(is_valid)
-        
 
     @patch.object(Serializer, 'is_valid', return_value=False)
     @patch.object(Serializer, 'errors', return_value={'field': ['some error']}, new_callable=PropertyMock)
-    def test_if_error_is_set(self, mock_errors:PropertyMock, mock_is_valid:MagicMock ):
+    def test_if_error_is_set(self, mock_errors: PropertyMock, mock_is_valid: MagicMock):
         validator = DRFValidator()
         is_valid = validator.validate(Serializer)
-        self.assertEqual(validator.errors, {'field': ['some error']} )
+        self.assertEqual(validator.errors, {'field': ['some error']})
         self.assertFalse(is_valid)
-
-
-

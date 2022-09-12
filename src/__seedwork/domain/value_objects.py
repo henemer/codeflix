@@ -6,9 +6,10 @@ import uuid
 
 from __seedwork.domain.exceptions import InvalidUuidException
 
+
 @dataclass(frozen=True, slots=True)
 class ValueObject(ABC):
-    
+
     def __str__(self) -> str:
         fields_name = [field.name for field in fields(self)]
         return str(getattr(self, fields_name[0])) \
@@ -20,7 +21,7 @@ class ValueObject(ABC):
 class UniqueEntityId(ValueObject):
 
     id: str = field(
-        default_factory=lambda:str(uuid.uuid4())
+        default_factory=lambda: str(uuid.uuid4())
     )
 
     def __post_init__(self):
@@ -33,5 +34,3 @@ class UniqueEntityId(ValueObject):
             uuid.UUID(self.id)
         except ValueError as ex:
             raise InvalidUuidException() from ex
-
-  

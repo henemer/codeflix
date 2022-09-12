@@ -1,6 +1,6 @@
 # pylint: disable=unnecessary-lambda
 from abc import ABC
-from dataclasses import dataclass, field, asdict
+from dataclasses import Field, dataclass, field, asdict
 from typing import Any
 from __seedwork.domain.value_objects import UniqueEntityId
 
@@ -15,7 +15,7 @@ class Entity(ABC):
     def id(self):
         return str(self.unique_entity_id)
 
-    def _set(self, name:str, value:Any):
+    def _set(self, name: str, value: Any):
         object.__setattr__(self, name, value)
         return self
 
@@ -24,3 +24,8 @@ class Entity(ABC):
         entity_dict.pop('unique_entity_id')
         entity_dict['id'] = self.id
         return entity_dict
+
+    @classmethod
+    def get_field(cls, entity_field: str) -> Field:
+        #pylint: disable=no-member
+        return cls.__dataclass_fields__[entity_field]

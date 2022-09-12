@@ -1,6 +1,6 @@
 from abc import ABC
 import abc
-from dataclasses import field, dataclass
+from dataclasses import field, dataclass, Field
 import math
 from typing import Any, Generic, List, Optional, TypeVar
 from __seedwork.domain.entities import Entity
@@ -204,4 +204,4 @@ class InMemorySearchableRepository(
     def _apply_paginate(self, items: List[ET], page: int, per_page: int) -> List[ET]:
         start = (page - 1) * per_page
         limit = start + per_page
-        return items [slice(start, limit)]
+        return items[slice(start, limit)]

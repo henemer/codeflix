@@ -3,6 +3,7 @@ import unittest
 from category.domain.entities import Category
 from category.infra.repositories import CategoryInMemoryRepository
 
+
 class TestCategoryInMemoryRepository(unittest.TestCase):
     repo: CategoryInMemoryRepository
 
@@ -17,7 +18,7 @@ class TestCategoryInMemoryRepository(unittest.TestCase):
         self.assertListEqual(items_filterd, items)
 
     def test_filter(self):
-        items = [ 
+        items = [
             Category(name='test'),
             Category(name='TEST'),
             Category(name='fake'),
@@ -28,20 +29,21 @@ class TestCategoryInMemoryRepository(unittest.TestCase):
 
     def test_sort_by_created_at_when_sort_param_is_null(self):
         items = [
-            Category(name = 'Test'),
-            Category(name = 'Test', created_at = datetime.now()+timedelta(seconds=100)),
-            Category(name = 'fake', created_at = datetime.now()+timedelta(seconds=200)),
+            Category(name='Test'),
+            Category(name='Test', created_at=datetime.now() +
+                     timedelta(seconds=100)),
+            Category(name='fake', created_at=datetime.now() +
+                     timedelta(seconds=200)),
         ]
 
         items_filtered = self.repo._apply_sort(items, None, None)
         self.assertEqual(items_filtered, [items[2], items[1], items[0]])
 
-    
     def test_sort_by_name(self):
         items = [
-            Category(name = 'c'),
-            Category(name = 'b'),
-            Category(name = 'a'),
+            Category(name='c'),
+            Category(name='b'),
+            Category(name='a'),
         ]
 
         items_filtered = self.repo._apply_sort(items, "name", "asc")

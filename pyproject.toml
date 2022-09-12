@@ -7,6 +7,7 @@ authors = [
 ]
 dependencies = [
     "djangorestframework>=3.13.1",
+    "pytest-cov>=3.0.0",
 ]
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -19,6 +20,13 @@ dev = [
     "pylint>=2.14.3",
     "pytest>=7.1.2",
 ]
+
+[tool.pdm.scripts]
+pep8="autopep8 --in-place --recursive ./src"
+test="pytest --ignore __pypackages__ ./src"
+test_cov="pytest --ignore __pypackages__ --cov ./src --cov-fail-under 80"
+test_cov_html="pytest --ignore __pypackages__ --cov  ./src --cov-report html:./__coverage --cov-fail-under 80"
+pylint="pylint ./src"
 
 [build-system]
 requires = ["pdm-pep517>=0.12.0"]

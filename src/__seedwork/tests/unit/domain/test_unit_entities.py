@@ -59,4 +59,3 @@ class TestEntityUnit(unittest.TestCase):
         #pylint: disable=protected-access
         entity._set('prop1', 'changed')
         self.assertEqual(entity.prop1, 'changed')
-
