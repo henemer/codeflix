@@ -469,6 +469,6 @@ class TestDeleteCategoryUseCase(unittest.TestCase):
         self.category_repo.items = [category]
         with patch.object(self.category_repo, 'delete', wraps=self.category_repo.delete) as spy_delete:
             request = DeleteCategoryUseCase.Input(id = category.id)
-            response = self.use_case.execute(request)
+            self.use_case.execute(request)
             spy_delete.assert_called_once()
             self.assertCountEqual(self.category_repo.items, [])
